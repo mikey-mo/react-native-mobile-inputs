@@ -5,8 +5,9 @@ import { Input } from 'react-native-elements';
 import { ScaledSheet } from 'react-native-size-matters';
 
 import errorStrings from './error-strings';
-import validations from './validations';
-// import formating from './formating';
+import validator from './validator';
+import formatter from './formatter';
+import cleaner from './cleaner';
 
 const styles = ScaledSheet.create({
   container: {
@@ -38,23 +39,24 @@ class MobileInputs extends Component {
   }
 
   performValidation = (value, type) => {
-    console.log('is there a validation running?', value, type);
+    const { disableFormatter } = this.props;
     const { inputs } = this.state;
     const { int } = inputs;
     if (type === 'intEr') {
       try {
-        validations[int](value);
+        validator[int](value);
         this.validationPassed(type);
       } catch (e) {
         this.validationFailed(type);
       }
     } else {
       try {
-        if (validations[int](value) === true) {
-          console.log(value, 'validation is passing...?');
-          this.validationPassed(type);
+        if (validator[int](value) === true) {
+          this.validationPassed(type, value);
+          !disableFormatter ? this.formatValidatedValue(value) : value;
         } else {
           this.validationFailed(type);
+          this.formFailedValue(value);
         }
       } catch (e) {
         console.log(e);
@@ -62,8 +64,28 @@ class MobileInputs extends Component {
     }
   }
 
+  formFailedValue = (value) => {
+    const { inputs } = this.state;
+    const cleanValue = cleaner(value);
+    const newInput = { ...inputs };
+    newInput.num = cleanValue;
+    this.setState({
+      inputs: newInput,
+    });
+  }
+
+  formatValidatedValue = (value) => {
+    const { inputs } = this.state;
+    const { int } = inputs;
+    const formattedValue = formatter[int](value);
+    const newInput = { ...inputs };
+    newInput.num = formattedValue;
+    this.setState({
+      inputs: newInput,
+    });
+  }
+
   validationFailed = (type) => {
-    console.log('this is being called?');
     const state = { ...this.state };
     const { errors } = state;
     errors[type] = errorStrings[type];
@@ -92,7 +114,8 @@ class MobileInputs extends Component {
 
   onInputEnd = (event, erType, ref) => {
     const { text } = event.nativeEvent;
-    this.performValidation(text, erType);
+    const cleanText = cleaner(text);
+    this.performValidation(cleanText, erType);
     if (ref) this[ref].focus();
   }
 
@@ -119,6 +142,8 @@ class MobileInputs extends Component {
       errorStyleNum,
       shake,
       nextRef,
+      disableIntError,
+      disableNumError,
     } = this.props;
 
     return (
@@ -133,20 +158,20 @@ class MobileInputs extends Component {
           containerStyle={[styles.intContainer, { ...intContainerStyle }]}
           shake={shake}
           placeholder={placeholderInt}
-          errorMessage={intEr}
+          errorMessage={!disableIntError ? intEr : null}
           errorStyle={[errorStyleInt]}
         />
         <Input
           onEndEditing={(event) => { this.onInputEnd(event, 'numEr', nextRef); }}
           ref={(mobileNum) => { this.mobileNum = mobileNum; }}
           keyboardType="number-pad"
-          maxLength={15}
+          maxLength={18}
           value={num}
           onChangeText={text => this.onInputChange(text, 'num')}
           containerStyle={[styles.numContainer, { ...numContainerStyle }]}
           shake={shake}
           placeholder={placeholderNum}
-          errorMessage={numEr}
+          errorMessage={!disableNumError ? numEr : null}
           errorStyle={[errorStyleNum]}
         />
       </View>
@@ -164,6 +189,9 @@ MobileInputs.defaultProps = {
   errorStyleInt: {},
   errorStyleNum: {},
   nextRef: '',
+  disableIntError: false,
+  disableNumError: false,
+  disableFormatter: false,
 };
 
 MobileInputs.propTypes = {
@@ -176,6 +204,9 @@ MobileInputs.propTypes = {
   errorStyleInt: PropTypes.shape({}),
   errorStyleNum: PropTypes.shape({}),
   nextRef: PropTypes.string,
+  disableIntError: PropTypes.bool,
+  disableNumError: PropTypes.bool,
+  disableFormatter: PropTypes.bool,
 };
 
 export default MobileInputs;
