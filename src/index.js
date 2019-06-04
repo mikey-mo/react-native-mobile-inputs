@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { View } from 'react-native';
 import { Input } from 'react-native-elements';
-import { ScaledSheet } from 'react-native-size-matters';
+import { ScaledSheet, moderateScale } from 'react-native-size-matters';
 import RNPickerSelect from 'react-native-picker-select';
 
 import countryCodes from './country-codes';
@@ -13,31 +13,31 @@ import cleaner from './cleaner';
 
 const styles = ScaledSheet.create({
   container: {
-    flex: 1,
+    paddingHorizontal: '10@ms',
     display: 'flex',
     flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   inputs: {
-    fontSize: '16@ms',
-    borderBottomColor: 'black',
+    fontSize: '14@ms',
   },
   intContainer: {
-    flex: 25,
+    width: '22%',
+    height: '40@ms',
+    borderBottomWidth: '1@ms',
+    justifyContent: 'center',
+  },
+  inputNumContainer: {
+    height: '40@ms',
+    borderBottomWidth: '1@ms',
+    borderBottomColor: 'black',
+    paddingHorizontal: 0,
+    marginHorizontal: 0,
   },
   numContainer: {
-    height: '40@ms',
-    borderBottomColor: 'darkgrey',
-  },
-});
-
-const pickerSelectStyles = ScaledSheet.create({
-  inputAndroid: {
-    borderBottomColor: 'darkgrey',
-    borderBottomWidth: '1@ms',
-    fontSize: '16@ms',
-    height: '40@ms',
-    marginHorizontal: '10@ms',
-    color: 'black',
+    width: '75%',
+    paddingHorizontal: 0,
+    marginHorizontal: 0,
   },
 });
 
@@ -145,11 +145,13 @@ class MobileInputs extends Component {
       placeholderNum,
       intContainerStyle,
       numContainerStyle,
+      inputNumContainerStyle,
+      pickerInputStyle,
       errorStyleNum,
       shake,
       nextRef,
       disableNumError,
-      inputStyles,
+      inputStyle,
     } = this.props;
 
     return (
@@ -161,7 +163,6 @@ class MobileInputs extends Component {
             onValueChange={(value) => {
               const { inputs } = this.state;
               const newInput = { ...inputs };
-              const { num } = newInput;
               newInput.int = value;
               this.setState({
                 inputs: newInput,
@@ -169,22 +170,32 @@ class MobileInputs extends Component {
                 const { num } = this.state.inputs;
                 this.performValidation(num);
               })}}
-            style={pickerSelectStyles}
+            style={{
+              inputIOS: {
+                fontSize: moderateScale(14),
+                ...pickerInputStyle,
+              },
+              inputAndroid: {
+                fontSize: moderateScale(14),
+                ...pickerInputStyle,
+              },
+            }}
+            Icon={() => null}
             value={this.state.value}
             useNativeAndroidPickerStyle={false}
             ref={(el) => this.mobileInt = el }
           />
         </View>
         <Input
-          inputStyle={[styles.inputs, { ...inputStyles }]}
+          inputStyle={[styles.inputs, { ...inputStyle }]}
           onEndEditing={(event) => { this.onInputEnd(event, nextRef); }}
           ref={(mobileNum) => { this.mobileNum = mobileNum; }}
           keyboardType="number-pad"
           maxLength={18}
           value={num}
           onChangeText={text => this.onInputChange(text)}
-          inputContainerStyle={[styles.numContainer, { ...numContainerStyle }]}
-          containerStyle={{ flex: 75 }}
+          inputContainerStyle={[styles.inputNumContainer, { ...inputNumContainerStyle }]}
+          containerStyle={[styles.numContainer, { ...numContainerStyle }]}
           shake={shake}
           placeholder={placeholderNum}
           errorMessage={!disableNumError ? numEr : null}
@@ -202,13 +213,13 @@ MobileInputs.defaultProps = {
   containerStyle: {},
   shake: false,
   numContainerStyle: {},
+  inputNumContainerStyl: {},
   intContainerStyle: {},
-  errorStyleInt: {},
   errorStyleNum: {},
   nextRef: '',
   disableNumError: false,
   disableFormatter: false,
-  inputStyles: {},
+  inputStyle: {},
 };
 
 MobileInputs.propTypes = {
@@ -218,13 +229,13 @@ MobileInputs.propTypes = {
   containerStyle: PropTypes.shape({}),
   shake: PropTypes.bool,
   numContainerStyle: PropTypes.shape({}),
+  inputNumContainerStyle: PropTypes.shape({}),  
   intContainerStyle: PropTypes.shape({}),
-  errorStyleInt: PropTypes.shape({}),
   errorStyleNum: PropTypes.shape({}),
   nextRef: PropTypes.string,
   disableNumError: PropTypes.bool,
   disableFormatter: PropTypes.bool,
-  inputStyles: PropTypes.shape({}),
+  inputStyle: PropTypes.shape({}),
 };
 
 export default MobileInputs;
