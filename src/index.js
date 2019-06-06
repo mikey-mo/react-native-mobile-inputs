@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { View } from 'react-native';
+import { View, Picker } from 'react-native';
 import { Input } from 'react-native-elements';
 import { ScaledSheet, moderateScale } from 'react-native-size-matters';
 import RNPickerSelect from 'react-native-picker-select';
@@ -25,12 +25,13 @@ const styles = ScaledSheet.create({
     width: '22%',
     height: '40@ms',
     borderBottomWidth: '1@ms',
+    borderBottomColor: '#86939e',
     justifyContent: 'center',
   },
   inputNumContainer: {
     height: '40@ms',
     borderBottomWidth: '1@ms',
-    borderBottomColor: 'black',
+    borderBottomColor: '#86939e',
     paddingHorizontal: 0,
     marginHorizontal: 0,
   },
@@ -55,34 +56,34 @@ class MobileInputs extends Component {
     };
   }
 
-  performValidation = (value) => {
-    if(value.length < 1) return;
-    const { disableFormatter } = this.props;
+  performValidation = () => {
     const { inputs } = this.state;
-    const { int } = inputs;
-    if (validator[int](value) === true) {
-      this.validationPassed(value);
-      !disableFormatter ? this.formatValidatedValue(value) : value;
+    const { disableFormatter } = this.props;    
+    const { num, int } = inputs;
+    if(num.length < 1) return;
+    if (validator[int](cleaner(num)) === true) {
+      this.validationPassed();
+      !disableFormatter ? this.formatValidatedValue(num) : num;
     } else {
       this.validationFailed();
-      this.formFailedValue(value);
+      this.formFailedValue();
     }
   }
 
-  formFailedValue = (value) => {
+  formFailedValue = () => {
     const { inputs } = this.state;
-    const cleanValue = cleaner(value);
+    const { num } = inputs;
     const newInput = { ...inputs };
-    newInput.num = cleanValue;
+    newInput.num = cleaner(num);
     this.setState({
       inputs: newInput,
     });
   }
 
-  formatValidatedValue = (value) => {
+  formatValidatedValue = () => {
     const { inputs } = this.state;
-    const { int } = inputs;
-    const formattedValue = formatter[int](value);
+    const { int, num } = inputs;
+    const formattedValue = formatter[int](cleaner(num));
     const newInput = { ...inputs };
     newInput.num = formattedValue;
     this.setState({
@@ -100,7 +101,7 @@ class MobileInputs extends Component {
   }
 
   validationPassed = () => {
-    const { onEndInput } = this.props;
+    const { onEndNumInput } = this.props;
     const state = { ...this.state };
     const { errors } = state;
     errors.numEr = '';
@@ -109,7 +110,7 @@ class MobileInputs extends Component {
     }, () => {
       const { inputs } = this.state;
       const { int, num } = inputs;
-      return onEndInput(`${int} ${num}`);
+      return onEndNumInput(`${int} ${num}`);
     });
   }
 
@@ -122,11 +123,10 @@ class MobileInputs extends Component {
     });
   }
 
-  onInputEnd = (event, ref) => {
-    const { text } = event.nativeEvent;
-    const cleanText = cleaner(text);
-    this.performValidation(cleanText);
-    if (ref) this[ref].focus();
+  onInputEnd = () => {
+    const { nextRefFocus } = this.props;
+    this.performValidation();
+    nextRefFocus();
   }
 
   render() {
@@ -149,7 +149,6 @@ class MobileInputs extends Component {
       pickerInputStyle,
       errorStyleNum,
       shake,
-      nextRef,
       disableNumError,
       inputStyle,
     } = this.props;
@@ -167,8 +166,8 @@ class MobileInputs extends Component {
               this.setState({
                 inputs: newInput,
               }, () => {
-                const { num } = this.state.inputs;
-                this.performValidation(num);
+                this.performValidation();
+                this.mobileNum.focus();
               })}}
             style={{
               inputIOS: {
@@ -188,7 +187,7 @@ class MobileInputs extends Component {
         </View>
         <Input
           inputStyle={[styles.inputs, { ...inputStyle }]}
-          onEndEditing={(event) => { this.onInputEnd(event, nextRef); }}
+          onEndEditing={this.onInputEnd}
           ref={(mobileNum) => { this.mobileNum = mobileNum; }}
           keyboardType="number-pad"
           maxLength={18}
@@ -207,8 +206,7 @@ class MobileInputs extends Component {
 }
 
 MobileInputs.defaultProps = {
-  onEndInput: () => null,
-  placeholderInt: '+1',
+  onEndNumInput: () => null,
   placeholderNum: '(718) 111 2222',
   containerStyle: {},
   shake: false,
@@ -216,15 +214,14 @@ MobileInputs.defaultProps = {
   inputNumContainerStyl: {},
   intContainerStyle: {},
   errorStyleNum: {},
-  nextRef: '',
+  nextRefFocus: () => null,
   disableNumError: false,
   disableFormatter: false,
   inputStyle: {},
 };
 
 MobileInputs.propTypes = {
-  onEndInput: PropTypes.func,
-  placeholderInt: PropTypes.string,
+  onEndNumInput: PropTypes.func,
   placeholderNum: PropTypes.string,
   containerStyle: PropTypes.shape({}),
   shake: PropTypes.bool,
