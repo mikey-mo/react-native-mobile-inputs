@@ -1,6 +1,6 @@
 {
   "name": "react-native-mobile-inputs",
-  "version": "1.0.0",
+  "version": "1.0.7",
   "description": "validation and formatting for react native mobile inputs",
   "main": "src/index.js",
   "scripts": {
@@ -8,7 +8,9 @@
   },
   "author": "maikimo",
   "dependencies": {
-    "prop-types": "15.5.10"
+    "prop-types": "15.5.10",
+    "react-native-elements": "^1.1.0",
+    "react-native-size-matters": "^0.2.1"
   },
   "peerDependencies": {
     "react": "^16.0.0-beta.5",
@@ -19,6 +21,10 @@
     "babel-preset-react-native": "4.0.0",
     "jest": "22.4.4",
     "react-test-renderer": "16.3.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/maiki-mo/react-native-mobile-inputs"
   },
   "license": "ISC"
 }
