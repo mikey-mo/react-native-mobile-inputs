@@ -36,14 +36,7 @@ Usage of component:
 
 ```
 <View>
-  <MobileInput
-  	onInputEnd{() => null}
-    containerStyle={{
-      ...
-    }}
-    shake
-    ...
-  />
+  <MobileInput />
 </View>
 ```
 
