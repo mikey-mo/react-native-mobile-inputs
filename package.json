@@ -1,6 +1,6 @@
 {
   "name": "react-native-mobile-inputs",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "validation and formatting for react native mobile inputs",
   "main": "src/index.js",
   "pre-commit": [
