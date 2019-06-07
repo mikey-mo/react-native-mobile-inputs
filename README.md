@@ -54,7 +54,8 @@ Usage of component:
 `nextRefFocus`\
 `disableNumError`\
 `disableFormatter`\
-`inputStyle`
+`inputStyle`\
+`splitIntAndNum`
 
    [React Native Elements]: <https://github.com/react-native-training/react-native-elements>
  
