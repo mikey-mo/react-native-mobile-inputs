@@ -56,5 +56,5 @@ Usage of component:
 `disableFormatter`\
 `inputStyle`
 
-   [React Native Elements]: <https://github.com/react*native*training/react*native*elements>
+   [React Native Elements]: <https://github.com/react-native-training/react-native-elements>
  
