@@ -65,7 +65,8 @@ class MobileInputs extends Component {
     if (num.length < 1) return;
     if (validator[int](cleaner(num)) === true) {
       this.validationPassed();
-      if (!disableFormatter) this.formatValidatedValue(num);
+      if (disableFormatter === false) this.formatValidatedValue(num);
+    } else {
       this.validationFailed();
       this.formFailedValue();
     }
