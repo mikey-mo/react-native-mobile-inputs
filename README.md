@@ -43,8 +43,8 @@ Usage of component:
 ```
 
 ### Supported Props
-`onEndInput` \
-`PlaceholderNum`\
+`onEndNumInput` \
+`placeholderNum`\
 `containerStyle`\
 `shake`\
 `numContainerStyle`\
