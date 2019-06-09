@@ -156,12 +156,15 @@ class MobileInputs extends Component {
       shake,
       disableNumError,
       inputStyle,
+      pickerProps,
+      inputProps,
     } = this.props;
 
     return (
       <View style={[styles.container, { ...containerStyle }]}>
         <View style={[styles.intContainer, { ...intContainerStyle }]}>
           <RNPickerSelect
+            {...pickerProps}
             placeholder={{}}
             items={countryCodes}
             onValueChange={(value) => {
@@ -190,6 +193,7 @@ class MobileInputs extends Component {
           />
         </View>
         <Input
+          {...inputProps}
           inputStyle={[styles.inputs, { ...inputStyle }]}
           onEndEditing={this.onInputEnd}
           ref={(mobileNum) => { this.mobileNum = mobileNum; }}
@@ -210,6 +214,8 @@ class MobileInputs extends Component {
 }
 
 MobileInputs.defaultProps = {
+  inputProps: {},
+  pickerProps: {},
   splitIntAndNum: false,
   onEndNumInput: () => null,
   pickerInputStyle: {},
@@ -227,6 +233,8 @@ MobileInputs.defaultProps = {
 };
 
 MobileInputs.propTypes = {
+  inputProps: PropTypes.shape({}),
+  pickerProps: PropTypes.shape({}),
   splitIntAndNum: PropTypes.bool,
   pickerInputStyle: PropTypes.shape({}),
   onEndNumInput: PropTypes.func,
