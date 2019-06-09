@@ -17,6 +17,7 @@ The `MobileInput` component will render a picker on the left displaying the curr
 * +33 (FR)
 * +61 (AUS)
 * +49 (GER)
+* +46 (SWE)
 
 ### Current Formatting and Validation Supported
 * +1 (US)
@@ -24,6 +25,7 @@ The `MobileInput` component will render a picker on the left displaying the curr
 * +33 (FR)
 * +61 (AUS)
 * +49 (GER)
+* +46 (SWE)
 
 # Installation
 Begin with installation of the package.
