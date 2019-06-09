@@ -42,20 +42,63 @@ Usage of component:
 </View>
 ```
 
-### Supported Props
-`onEndNumInput` \
-`placeholderNum`\
-`containerStyle`\
-`shake`\
-`numContainerStyle`\
-`inputNumComtainerStyle`\
-`intContainerStyle`\
-`errorStyleNum`\
-`nextRefFocus`\
-`disableNumError`\
-`disableFormatter`\
-`inputStyle`\
+### Supported Props / Usage
+`pickerProps`
+| Type | Purpose | Example |
+| :---: | :---: |  :---: |
+| Object | Props object specifically for `react-native-picker-select`. | `{ disabled: ..., onValueChange: ... }` |
+`inputProps`
+| Type | Purpose | Example |
+| :---: | :---: |  :---: |
+| Object | Props object specifically for `react-native-elements` `Input` component. | `{ label: ..., labelStyle: ... }` |
+`onEndNumInput`
+| Type | Purpose | Example |
+| :---: | :---: |  :---: |
+| Function | On end of number input.  Takes a `value` argument.  Will return a concatenated string of the Int + Number.  If the `splitIntAndNum` prop is passed, it will return an object of `{ int: ..., num: ... }`.| `(value) => console.log(value)` |
+`placeholderNum`
+| Type | Purpose | Example |
+| :---: | :---: |  :---: |
+| String | Placeholder for the number input. | `'+1 (718) 621 1234'` |
+`containerStyle`
+| Type | Purpose | Example |
+| :---: | :---: |  :---: |
+| Object | Styles for container holding both Int picker and Num input. | `{ width: ..., height: ..., backgroundColor: ... }` |
+`numContainerStyle`
+| Type | Purpose | Example |
+| :---: | :---: |  :---: |
+| Object | Styles Num input container. | `{ width: ..., height: ..., backgroundColor: ... }` |
+`inputNumComtainerStyle`
+| Type | Purpose | Example |
+| :---: | :---: |  :---: |
+| Object | Styles the Input for the Num input container. | `{ width: ..., height: ..., backgroundColor: ... }` |
+`intContainerStyle`
+| Type | Purpose | Example |
+| :---: | :---: |  :---: |
+| Object | Styles the Int picker container. | `{ width: ..., height: ..., backgroundColor: ... }` |
+`errorStyleNum`
+| Type | Purpose | Example |
+| :---: | :---: |  :---: |
+| Object | Styles the Error text for Num input. | `{ color: ..., fontSize: ... }` |
+`nextRefFocus`
+| Type | Purpose | Example |
+| :---: | :---: |  :---: |
+| String | Works with the `onEndNumInput` prop to `focus` on a next input. | `NextInput` |
+`disableNumError`
+| Type | Purpose | Example |
+| :---: | :---: |  :---: |
+| Boolean | Disables whether or not Num error text will render. | false |
+`disableFormatter`
+| Type | Purpose | Example |
+| :---: | :---: |  :---: |
+| Boolean | Disables formatting for Num input. | false |
+`inputStyle`
+| Type | Purpose | Example |
+| :---: | :---: |  :---: |
+| Object | Styles the Num input for Input component. | `{ color: ..., fontWeight: ... }` |
 `splitIntAndNum`
+| Type | Purpose | Example |
+| :---: | :---: |  :---: |
+| Boolean | Works with `onEndNumInput`.  Splits Int and Num into an object on return. | false |
 
    [React Native Elements]: <https://github.com/react-native-training/react-native-elements>
  
