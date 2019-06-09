@@ -43,75 +43,74 @@ Usage of component:
 ```
 
 ### Supported Props / Usage
-`pickerProps`
-
+`pickerProps`\
 Type: `Object`\
-Purpose: Props object specifically for `react-native-picker-select` `Picker` component. 
+Purpose: Props object specifically for `react-native-picker-select` `Picker` component.\
 Example: `{ disabled: ..., onValueChange: ... }`
 
 `inputProps`\
-Type: `Object`
-Purpose: Props object specifically for `react-native-elements` `Input` component. 
+Type: `Object`\
+Purpose: Props object specifically for `react-native-elements` `Input` component.\
 Example: `{ label: ..., labelStyle: ... }`
 
 `onEndNumInput`\
-Type: `Function` 
-Purpose: On end of number input.  Takes a `value` argument.  Will return a concatenated string of the Int + Number.  If the `splitIntAndNum` prop is passed, it will return an object of `{ int: ..., num: ... }`.
+Type: `Function`\
+Purpose: On end of number input.  Takes a `value` argument.  Will return a concatenated string of the Int + Number.  If the `splitIntAndNum` prop is passed, it will return an object of `{ int: ..., num: ... }`.\
 Example: `(value) => console.log(value)`
 
 `placeholderNum`\
-Type: `String` 
-Purpose: Placeholder for the number input. 
+Type: `String`\
+Purpose: Placeholder for the number input.\
 Example: `'+1 (718) 621 1234'`
 
 `containerStyle`\
-Type: `Object` 
-Purpose: Styles for container holding both Int picker and Num input. 
+Type: `Object`\
+Purpose: Styles for container holding both Int picker and Num input.\
 Example: `{ width: ..., height: ..., backgroundColor: ... }`
 
 `numContainerStyle`\
-Type: `Object` 
-Purpose: Styles Num input container. 
+Type: `Object`\
+Purpose: Styles Num input container.\
 Example: `{ width: ..., height: ..., backgroundColor: ... }`
 
 `inputNumComtainerStyle`\
-Type: `Object` 
-Purpose: Styles the Input for the Num input container. 
+Type: `Object`\
+Purpose: Styles the Input for the Num input container.\
 Example: `{ width: ..., height: ..., backgroundColor: ... }`
 
 `intContainerStyle`\
-Type: `Object` 
-Purpose: Styles the Int picker container. 
+Type: `Object`\
+Purpose: Styles the Int picker container.\
 Example: `{ width: ..., height: ..., backgroundColor: ... }`
 
 `errorStyleNum`\
-Type: `Object` 
-Purpose: Styles the Error text for Num input. 
+Type: `Object`\
+Purpose: Styles the Error text for Num input.\
 Example: `{ color: ..., fontSize: ... }`
 
 `nextRefFocus`\
-Type: `String` 
-Purpose: Works with the `onEndNumInput` prop to `focus` on a next input. 
+Type: `String`\
+Purpose: Works with the `onEndNumInput` prop to `focus` on a next input.\
 Example: `NextInput`
 
 `disableNumError`\
-Type: `Boolean` 
-Purpose: Disables whether or not Num error text will render. 
+Type: `Boolean`\
+Purpose: Disables whether or not Num error text will render.\
 Example: false
 
 `disableFormatter`\
-Type: `Boolean` 
-Purpose: Disables formatting for Num input. 
+Type: `Boolean`\
+Purpose: Disables formatting for Num input.\
 Example: false
 
 `inputStyle`\
-Type: `Object` 
-Purpose: Styles the Num input for Input component. 
+Type: `Object`\
+Purpose: Styles the Num input for Input component.\
 Example: `{ color: ..., fontWeight: ... }`
 
 `splitIntAndNum`\
-Type: `Boolean` 
-Purpose: Works with `onEndNumInput`.  Splits Int and Num into an object on return. 
+Type: `Boolean`\
+Purpose: Works with `onEndNumInput`.  Splits Int and Num into an object on return.\
 Example: false
 
    [React Native Elements]: <https://github.com/react-native-training/react-native-elements>
